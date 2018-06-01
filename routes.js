@@ -12,19 +12,20 @@ const instanceCodeBreaker = undefined;
     res.status(200).send({ resultado });
 });*/
 
-api.get('/codebreaker/secret/:number',function (req, res) {
+api.get('/codebreaker/secret',function (req, res) {
+    console.log(res.params);
+    res.send("asd");
     let response = {
         "message": "",
         "err": 1
-    };
+    }
+    console.log(req);
     let validation = validator.validarCadena(req.body.number);
     if(req.body.number === undefined){
-        console.log("1")
         response.message = "El require debe de tener el siguiente formato {number: [number]}";
         return res.status(204).send(response);
     }
     if(validation != true){
-        console.log("2")
         response.message = validation;
         return res.status(204).send(response);
     }
@@ -33,8 +34,9 @@ api.get('/codebreaker/secret/:number',function (req, res) {
     }else{
         instanceCodeBreaker.setSecret(req.body.number);
     }
-    console.log("3")
-    return res.status(200).send({ resultado });
+    response.err = 0;
+    response.message = "Se creó con exito";
+    return res.status(200).send({ response });
 });
 
 
